@@ -35,7 +35,7 @@ export const createSubscription = async (req, res, next) => {
 
 export const getUserSubscriptions = async (req, res, next) => {
     try {
-        // 🔥 Fix: Corrected `req.user._id`
+        
         if (req.user._id.toString() !== req.params.id) {
             return res.status(401).json({ success: false, message: "Unauthorized: You do not own this subscription" });
         }

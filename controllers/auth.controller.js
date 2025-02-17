@@ -86,10 +86,24 @@ export const signIn = async (req, res, next) => {
     }
 };
 
-export const signOut = async (req, res) => {
-    try {
-        
-    } catch (error) {
-        
-    }
+export const signOut = async (req, res, next) => {
+  try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+          return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      // Get token from header
+      const token = authHeader.split(" ")[1];
+
+      // ✅ Tell frontend to remove token (No need to store expired token)
+      return res.status(200).json({ 
+          success: true,
+          message: "Signed out successfully. Remove token from frontend." 
+      });
+
+  } catch (error) {
+      next(error);
+  }
 };
+
